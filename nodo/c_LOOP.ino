@@ -1,9 +1,11 @@
 void loop() {
   status = WiFi.status();
   if (status != WL_CONNECTED) {
+    digitalWrite(LED_WIFI,LOW);
     reconnectWifi();
   }
   if (!client.connected()) {
+    digitalWrite(LED_ESP8266,LOW);
     reconnectClient();
   }
   client.loop();
