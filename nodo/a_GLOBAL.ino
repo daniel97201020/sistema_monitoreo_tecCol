@@ -9,6 +9,7 @@ bool readHTA();
 bool readHTT();
 bool readWind();
 bool readPH();
+String obtenerJSON();
 
 
 #include <WiFiEsp.h>
