@@ -29,4 +29,6 @@ void setup() {
   }
   Serial.println("Inicialización Correcta de Tarjeta");
   startTime = millis();
+  //Se inicia el sensor de Temperatura y Humedad de Ambiente
+  dht.begin();
 }
