@@ -24,6 +24,7 @@ void setup() {
   Cron.create("* */10 * * * *", everyTen, false);
   initWifi();
   client.setServer(server, 1883);
+  client.setCallback(readSuscribe);
   //Inicialización de Tarjeta
   if (!SD.begin(SSpin)) {
     Serial.println("Fallo en iniciar la Tarjeta SD");
