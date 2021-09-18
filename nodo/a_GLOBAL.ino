@@ -10,6 +10,8 @@ bool readHTT();
 bool readWind();
 bool readPH();
 String obtenerJSON();
+void readSuscribe();
+void activateValves();
 
 
 #include <WiFiEsp.h>
