@@ -1,10 +1,8 @@
 void publishNow(String payload)
 {
-  Serial.println("sendDataTopic");
-  payload += count_esp;
-  count_esp++;
+  Serial.println("publishNow");
   char attributes[200];
-  payload.toCharArray(attributes,200);
-  client.publish(TOPIC_ID,attributes);
+  payload.toCharArray(attributes, 200);
+  client.publish(TOPIC_ID, attributes);
   Serial.println(attributes);
 }

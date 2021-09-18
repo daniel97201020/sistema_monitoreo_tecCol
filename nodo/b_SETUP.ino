@@ -1,7 +1,8 @@
 void setup() {
+
   Serial.begin(9600);
   //CRON SETUP
-   struct tm tm_newtime; // set time to Saturday 8:29:00am Jan 1 2011
+  struct tm tm_newtime; // set time to Saturday 8:29:00am Jan 1 2011
   tm_newtime.tm_year = 2011 - 1900;
   tm_newtime.tm_mon = 1 - 1;
   tm_newtime.tm_mday = 1;
@@ -20,15 +21,15 @@ void setup() {
 #endif
 
   Cron.create("* * */1 * * *", everyHour, false);
+  Cron.create("* */10 * * * *", everyTen, false);
   initWifi();
   client.setServer(server, 1883);
-//Inicialización de Tarjeta
-  if(!SD.begin(SSpin)){
+  //Inicialización de Tarjeta
+  if (!SD.begin(SSpin)) {
     Serial.println("Fallo en iniciar la Tarjeta SD");
     return;
   }
   Serial.println("Inicialización Correcta de Tarjeta");
   startTime = millis();
-  //Se inicia el sensor de Temperatura y Humedad de Ambiente
   dht.begin();
 }
