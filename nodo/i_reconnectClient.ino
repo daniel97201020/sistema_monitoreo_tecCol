@@ -4,6 +4,7 @@ void reconnectClient() {
     Serial.println(server);
     String clientId = "ESP8266Client-" + String(random(0xffff), HEX);
     if (client.connect(clientId.c_str())) {
+      digitalWrite(LED_ESP8266, HIGH);
       Serial.println("[DONE]");
       client.subscribe(TOPIC_ID);
     } else {

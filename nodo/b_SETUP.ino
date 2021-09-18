@@ -1,5 +1,19 @@
 void setup() {
 
+  pinMode(LED_ENC,OUTPUT); 
+  pinMode(LED_ESP8266,OUTPUT);
+  pinMode(LED_PUBLISH,OUTPUT);
+  pinMode(LED_SUBSCRIBE,OUTPUT);
+  pinMode(LED_ACTIVATE,OUTPUT);
+  pinMode(LED_WIFI, OUTPUT);
+  pinMode(PIN_VALVE,OUTPUT);
+  digitalWrite(LED_ENC, LOW);
+  digitalWrite(LED_ESP8266, LOW);
+  digitalWrite(LED_PUBLISH, LOW);
+  digitalWrite(LED_SUBSCRIBE, LOW);
+  digitalWrite(LED_ACTIVATE, LOW);
+  digitalWrite(LED_WIFI, LOW);
+  digitalWrite(PIN_VALVE, LOW);
   Serial.begin(9600);
   //CRON SETUP
   struct tm tm_newtime; // set time to Saturday 8:29:00am Jan 1 2011
@@ -22,6 +36,7 @@ void setup() {
 
   Cron.create("* * */1 * * *", everyHour, false);
   Cron.create("* */10 * * * *", everyTen, false);
+  digitalWrite(LED_ENC,HIGH);
   initWifi();
   client.setServer(server, 1883);
   client.setCallback(readSuscribe);

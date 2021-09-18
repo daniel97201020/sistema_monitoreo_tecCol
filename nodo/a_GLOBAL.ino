@@ -10,8 +10,9 @@ bool readHTT();
 bool readWind();
 bool readPH();
 String obtenerJSON();
-void readSuscribe();
+void readSuscribe(char*,byte*,int unsigned);
 void activateValves();
+bool checkCommand(String);
 
 
 #include <WiFiEsp.h>
@@ -28,6 +29,7 @@ void activateValves();
 #include <sys/time.h>                   // struct timeval
 #endif
 #include "CronAlarms.h"
+#include <TimerOne.h>
 
 #define WIFI_AP "INFINITUM_AA"
 #define WIFI_PASSWORD "contraseña"
@@ -39,6 +41,13 @@ void activateValves();
 #define TOL_H 5.3
 #define TOL_W 3.0
 #define TOL_PH 0.5
+#define LED_WIFI 5
+#define LED_ENC 6
+#define LED_ESP8266 7
+#define LED_PUBLISH 8
+#define LED_SUBSCRIBE 9
+#define LED_ACTIVATE 10
+#define PIN_VALVE 11
 
 char server[50] = "192.168.0.6";
 
@@ -63,3 +72,4 @@ float hum_t = 0.0;
 float wind = 0.0;
 float ph  = 0.0;
 String errores = "";
+int a = 0;
