@@ -18,10 +18,10 @@ bool checkCommand(String);
 #include <WiFiEsp.h>
 #include <WiFiEspClient.h>
 #include <PubSubClient.h>
-#include <SoftwareSerial.h>
 #include <SPI.h>
 #include <SD.h>
 #include <DHT.h>
+#define mySerial Serial2
 
 
 #include <time.h>                       // time() ctime()
@@ -29,25 +29,26 @@ bool checkCommand(String);
 #include <sys/time.h>                   // struct timeval
 #endif
 #include "CronAlarms.h"
-#include <TimerOne.h>
+#include <RTClock.h>
 
 #define WIFI_AP "INFINITUM_AA"
 #define WIFI_PASSWORD "contraseña"
 #define TOPIC_ID  "agroTech/Node_1"
-#define SSpin 10
-#define DHTPIN 2
+#define SSpin 40
+#define DHTPIN 46
 #define DHTTYPE DHT11
 #define TOL_T 1.5
 #define TOL_H 5.3
 #define TOL_W 3.0
 #define TOL_PH 0.5
-#define LED_WIFI 5
-#define LED_ENC 6
-#define LED_ESP8266 7
-#define LED_PUBLISH 8
-#define LED_SUBSCRIBE 9
-#define LED_ACTIVATE 10
+#define LED_WIFI 15
+#define LED_ENC 14
+#define LED_ESP8266 16
+#define LED_PUBLISH 17
+#define LED_SUBSCRIBE 18
+#define LED_ACTIVATE 19
 #define PIN_VALVE 11
+#define A0 10
 
 char server[50] = "192.168.0.6";
 
@@ -55,13 +56,13 @@ WiFiEspClient espClient;
 
 PubSubClient client(espClient);
 
-SoftwareSerial mySerial(1, 2);
-
 CronId id;
 
 File archivo;
 
 DHT dht(DHTPIN, DHTTYPE);
+
+RTClock rtclock (RTCSEL_LSE);
 
 unsigned long startTime;
 

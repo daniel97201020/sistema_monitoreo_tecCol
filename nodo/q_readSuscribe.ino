@@ -8,7 +8,6 @@ void readSuscribe(char* topic, byte* payload, int unsigned length){
   Serial.println(s);
   if(checkCommand(s)){
    //Se configura la interrupción
-    Timer1.initialize(30000);
-    Timer1.attachInterrupt(activateValves);
+    rtclock.attachSecondsInterrupt(activateValves);
   }
 }

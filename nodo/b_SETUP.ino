@@ -1,6 +1,6 @@
 void setup() {
 
-  pinMode(LED_ENC,OUTPUT); 
+  pinMode(LED_ENC,OUTPUT);
   pinMode(LED_ESP8266,OUTPUT);
   pinMode(LED_PUBLISH,OUTPUT);
   pinMode(LED_SUBSCRIBE,OUTPUT);
