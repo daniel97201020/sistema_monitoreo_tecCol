@@ -7,6 +7,9 @@
 #include <sys/time.h>                   // struct timeval
 #endif
 #include "CronAlarms.h"
+#include <Arduino.h>
+#include <Ticker.h>
+
 #define TOL_H 1.5
 #define TOL_T 1
 //*******************
@@ -25,7 +28,7 @@ const char* root_topic_subscribe = "agroTech/Nodo_1/valvulas";
 //*********** WIFICONFIG ***************
 //**************************************
 const char* ssid = "INFINITUM2FA2_2.4";
-const char* password =  "UQY4HxhpAu";
+const char* password =  "UQY4HxhpAu"; //UQY4HxhpAu
 
 
 
@@ -36,14 +39,18 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 DHT dht(27, DHT11);
 CronId id;
+Ticker timer;
 char msg[200];
 long count=0;
 
-int analogPin = 32;
+const int analogPin = 34;
 int lectura;
 float hum_t;
 float hum_a;
 float temp_a;
+const float period = 1; //seconds
+int val;
+int duration;
 
 //************************
 //** F U N C I O N E S ***
@@ -56,8 +63,23 @@ bool leerTempHum();
 void publishNow();
 void checkCommand(String);
 
+void timer1() {
+  val++;
+  Serial.println(val);
+  if(val == duration){
+      val = 0;
+      digitalWrite(LED_BUILTIN,LOW);
+      timer.detach();
+  }
+}
+
 void setup() {
   pinMode(LED_BUILTIN,OUTPUT);
+  pinMode(25,OUTPUT); //ENC
+  pinMode(26,OUTPUT); //WIFI
+  pinMode(14,OUTPUT); //BROKER
+  pinMode(12,OUTPUT); //PUB/SUB
+  pinMode(13,OUTPUT); //VALVE
   Serial.begin(115200);
   setup_wifi();
   client.setServer(mqtt_server, mqtt_port);
@@ -212,7 +234,7 @@ bool leerHumedadT(){
   bool flag = false;
   Serial.println("readHTA - Humedad de Tierra Relativa %");
   lectura = analogRead(analogPin);
-  float nowHumT = map(lectura, 1023, 0, 0, 100);
+  float nowHumT = map(lectura, 4095, 0, 0, 100);
   Serial.print("HUM-T: ");
   Serial.print(nowHumT);
   Serial.println("%");
@@ -252,13 +274,16 @@ void everyMin(){ //CADA HORA
 }
 
 void checkCommand(String com){
-   if(com == "ON"){
+  /*f(com == "ON"){
       digitalWrite(LED_BUILTIN,HIGH);
    } else if(com == "OFF") {
       digitalWrite(LED_BUILTIN,LOW);
    } else {
       Serial.println("COMANDO INCORRECTO");
-   }
+   } */
+   if(com.length() > 0 && com.toInt() > 0){
+        duration = com.toInt();
+        timer.attach(period, timer1);
+        digitalWrite(LED_BUILTIN,HIGH);
+    }
 }
-
-//COMENTARIO//
