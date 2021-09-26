@@ -102,8 +102,8 @@ void setup() {
   set_system_time( mktime(&tm_newtime) );
 #endif
   // create timers, to trigger relative to when they're created
-  Cron.create("*/15 * * * * *", every15, false);
-  Cron.create("*/60 * * * * *", everyMin, false);
+  Cron.create("0 */1 * * * *",every15,false);
+  Cron.create("0 */5 * * * *",everyMin,false);
   dht.begin();
 }
 
@@ -251,7 +251,7 @@ bool leerHumedadT(){
 void publishNow(){
   if (client.connected()){
       Serial.println("Se publica");
-      String str = "HT:" + String(hum_t,3)+"; HA: "+String(hum_a,3)+" TA: "+String(temp_a,3);
+      String str = "{\"temp_a\":\""+String(temp_a,3)+"\",\"hum_a\":\""+String(hum_a,3)+"\",\"hum_t\":\""+String(hum_t,3)+"\",\"ph\":\"N/A\",\"errores\":\"N/A\"}";
       str.toCharArray(msg,200);
       client.publish(root_topic_publish,msg);
       delay(1000);
